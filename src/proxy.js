@@ -23,7 +23,7 @@ function isLocalDevHost(hostname) {
   return false;
 }
 
-export function middleware(request) {
+export function proxy(request) {
   const canonicalRaw = process.env.NEXT_PUBLIC_CANONICAL_HOST?.trim();
   if (!canonicalRaw) {
     return NextResponse.next();
@@ -58,7 +58,6 @@ export function middleware(request) {
 
 export const config = {
   matcher: [
-    // Skip static assets + /uploads (served by Next route; avoid touching media URLs in prod redirects)
     "/((?!_next/static|_next/image|favicon.ico|uploads|.*\\.(?:ico|png|jpg|jpeg|gif|svg|webp|woff2?)$).*)",
   ],
 };

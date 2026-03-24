@@ -1,15 +1,5 @@
 /** @type {import('next').NextConfig} */
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 const nextConfig = {
-  turbopack: {
-    root: __dirname,
-  },
-
   /** HSTS in production when canonical host is configured (browser “HTTPS only” for your domain). */
   async headers() {
     if (
