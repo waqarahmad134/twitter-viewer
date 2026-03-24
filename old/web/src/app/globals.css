@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-display: "Outfit", system-ui, sans-serif;
+
+  --color-x-black: #0f1419;
+  --color-x-gray: #536471;
+  --color-x-border: #cfd9de;
+  --color-x-blue: #1d9bf0;
+  --color-x-light: #f7f9f9;
+}
+
+body {
+  @apply bg-slate-50 text-x-black font-sans antialiased;
+}
+
+/* TipTap admin editor — empty state hint */
+.post-tiptap-editor .tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--color-x-gray, #536471);
+}

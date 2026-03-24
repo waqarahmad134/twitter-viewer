@@ -1,0 +1,13 @@
+{
+  "name": "twitter-viewer",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install && cd web && npm install",
+    "dev": "cd web && npm run dev",
+    "dev:web": "cd web && npm run dev",
+    "build": "cd web && npm run build",
+    "build:web": "cd web && npm run build",
+    "start": "cd web && npm run start"
+  }
+}

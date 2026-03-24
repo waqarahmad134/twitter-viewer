@@ -1,53 +1,36 @@
-# Twitter Viewer
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-View Twitter profiles and tweets without an account. Clean, private, ad-free.
+## Getting Started
 
-## Features
-
-- **Tweet Viewer** — View any tweet with engagement stats and media (uses Syndication API)
-- **Profile Viewer** — Browse profiles anonymously (uses Nitter instances)
-- No login required
-- One-click media download
-
-## Tech Stack
-
-- **Frontend:** React, Vite, Tailwind CSS, React Router
-- **Backend:** Node.js, Express
-- **Data:** [Nitter](https://github.com/zedeus/nitter) instances only (profiles + tweets)
-
-## Setup
+First, run the development server:
 
 ```bash
-# Install dependencies
-npm run install:all
-
-# Start backend (port 3001)
-npm run dev:server
-
-# In another terminal: start frontend (port 5173)
-npm run dev:client
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-Then open [http://localhost:5173](http://localhost:5173).
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Project Structure
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-```
-twitter-viewer/
-├── client/          # React frontend
-├── server/          # Express API
-└── PROJECT-CLONE-GUIDE.md
-```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## API Endpoints
+## Learn More
 
-- `GET /api/tweet?url=<tweet_url>` — Fetch tweet (full URL required, e.g. https://x.com/user/status/123)
-- `GET /api/profile?handle=<username>` — Fetch profile
+To learn more about Next.js, take a look at the following resources:
 
-## Notes
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-- **Data source:** [Nitter](https://github.com/zedeus/nitter) — public instances via Puppeteer, or your own local instance
-- **Puppeteer** — Public Nitter instances use "Verifying your browser" bot protection; we use headless Chrome to bypass (first run: ~150MB Chromium download)
-- **Self-host option:** Run your own Nitter (no bot protection, faster). See `nitter/NITTER-SETUP.md`. Then set `NITTER_LOCAL=http://localhost:3002`
-- Tweet Viewer requires full tweet URL (x.com/username/status/123)
-- Not affiliated with Twitter (X Corp.)
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

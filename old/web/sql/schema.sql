@@ -1,0 +1,98 @@
+-- Blog + categories schema for database `twitter`
+-- Configure DB in `web/.env` and run `npm run migrate` from the `web` folder.
+
+CREATE TABLE IF NOT EXISTS categories (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  slug VARCHAR(191) NOT NULL UNIQUE,
+  description TEXT NULL,
+
+  seo_title VARCHAR(255) NULL,
+  seo_description TEXT NULL,
+  og_image_url VARCHAR(1024) NULL,
+  noindex TINYINT(1) NOT NULL DEFAULT 0,
+
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS posts (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  slug VARCHAR(191) NOT NULL UNIQUE,
+  title VARCHAR(255) NOT NULL,
+  excerpt TEXT NULL,
+
+  content_md MEDIUMTEXT NULL,
+  content_html LONGTEXT NULL,
+
+  cover_image_url VARCHAR(1024) NULL,
+  status ENUM('draft','published') NOT NULL DEFAULT 'draft',
+  category_id INT NULL,
+  published_at DATETIME NULL,
+
+  seo_title VARCHAR(255) NULL,
+  seo_description TEXT NULL,
+  og_image_url VARCHAR(1024) NULL,
+  noindex TINYINT(1) NOT NULL DEFAULT 0,
+
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  INDEX idx_posts_category_id (category_id),
+
+  CONSTRAINT fk_posts_category
+    FOREIGN KEY (category_id) REFERENCES categories(id)
+    ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS admins (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(191) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(50) NOT NULL DEFAULT 'admin',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS site_settings (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  site_name VARCHAR(255) NOT NULL DEFAULT 'Twitter Viewer',
+  default_description TEXT NULL,
+  default_og_image_url VARCHAR(1024) NULL,
+  default_og_title VARCHAR(255) NULL,
+  default_canonical_base VARCHAR(1024) NULL,
+  default_noindex TINYINT(1) NOT NULL DEFAULT 0,
+  default_twitter_card VARCHAR(50) NULL,
+  default_twitter_site VARCHAR(100) NULL,
+  default_twitter_creator VARCHAR(100) NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS media (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  file_url VARCHAR(1024) NOT NULL,
+  file_name VARCHAR(255) NULL,
+  mime_type VARCHAR(255) NULL,
+  file_size BIGINT NULL,
+
+  title VARCHAR(255) NULL,
+  alt_text VARCHAR(255) NULL,
+  caption TEXT NULL,
+  description TEXT NULL,
+
+  status ENUM('active','deleted') NOT NULL DEFAULT 'active',
+
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS site_schemas (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL DEFAULT 'Schema',
+  schema_json LONGTEXT NOT NULL,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+  sort_order INT NOT NULL DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
