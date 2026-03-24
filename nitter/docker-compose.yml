@@ -1,0 +1,25 @@
+# Self-hosted Nitter - no bot protection, works with simple fetch
+# Requires sessions.jsonl with Twitter tokens. See NITTER-SETUP.md
+version: "3"
+services:
+  nitter:
+    image: zedeus/nitter:latest
+    ports:
+      - "3002:8080"
+    volumes:
+      - ./nitter.conf:/src/nitter.conf
+      - ./sessions.jsonl:/src/sessions.jsonl
+    environment:
+      - NITTER_SESSIONS_FILE=/src/sessions.jsonl
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  redis:
+    image: valkey/valkey:latest
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
